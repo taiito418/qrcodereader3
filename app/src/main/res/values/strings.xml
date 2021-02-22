@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">qrcodereader3</string>
+    <string name="app_name">シンプルQR</string>
     <string name="qr_start_capture">開始</string>
     <string name="qr_result">結果</string>
     <string name="qr_create">できた</string>

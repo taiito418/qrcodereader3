@@ -11,6 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".QrActivity">
+        </activity>
+        <activity android:name=".ToolbarCaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +24,8 @@
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
-            tools:replace="screenOrientation"/>
+            tools:replace="screenOrientation">
+        </activity>
     </application>
 
 </manifest>

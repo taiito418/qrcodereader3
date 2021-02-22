@@ -22,7 +22,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.util.Hashtable;
 
 import androidx.appcompat.app.AppCompatActivity;
-//https://blog.shg25.com/?p=184
+//https://blog.shg25.com/?p=184 このソースの大元
 //https://qiita.com/Mosea/items/e9dae626713fe9950734 // [Kotlin] Zxing QRコードリーダーをカスタマイズ
 //http://9ensan.com/blog/smartphone/android/android-qr-zxing-sample/
 //https://phoneappli.hatenablog.com/entry/2020/12/17/161115
@@ -64,32 +64,35 @@ public class QrActivity extends AppCompatActivity {
                 // IntentIntegrator integrator = IntentIntegrator.forFragment(this);
 
                 // 独自でキャプチャ画面のActivityを作成
-                // integrator.setCaptureActivity(ToolbarCaptureActivity.class);
+                //integrator.setCaptureActivity(ToolbarCaptureActivity.class);
                 // → QrToolbarCaptureActivityのSample： https://github.com/journeyapps/zxing-android-embedded/blob/master/sample/src/main/java/example/zxing/ToolbarCaptureActivity.java
+                new IntentIntegrator(this).setCaptureActivity(ToolbarCaptureActivity.class).initiateScan();
+
 
                 // スキャンするバーコード形式を指定
                 // integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
 
                 // キャプチャ画面の下方にメッセージを表示
-                integrator.setPrompt("Scan a barcode");
+                ////integrator.setPrompt("Scan a barcode");
 
                 // カメラの特定（この場合はフロントカメラを使用）
                 // integrator.setCameraId(Camera.CameraInfo.CAMERA_FACING_FRONT);
 
                 // 読み取り時の音声をオフに
-                integrator.setBeepEnabled(false);
+                ////integrator.setBeepEnabled(false);
 
                 // バーコードを画像保存できるっぽい（保存先はonActivityResultでIntentResult#getBarcodeImagePath()で取得）
-                integrator.setBarcodeImageEnabled(true);
+                ////integrator.setBarcodeImageEnabled(true);
 
                 // スキャン画面の回転の制御
-                integrator.setOrientationLocked(true);
+                //integrator.setOrientationLocked(true);
 
                 // キャプチャ画面起動
-                integrator.initiateScan();
+                //integrator.initiateScan();
 
 
                 break;
+                /* ここはいらないのコメントアウトしておく
             case R.id.create_qr: // QRコード生成
                 Bitmap bitmap;
                 try {
@@ -106,6 +109,8 @@ public class QrActivity extends AppCompatActivity {
                     return;
                 }
                 break;
+
+                 */
         }
     }
 
