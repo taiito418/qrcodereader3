@@ -5,8 +5,10 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MyConfirmDialog extends DialogFragment {
 
@@ -46,18 +48,63 @@ public class MyConfirmDialog extends DialogFragment {
         //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_CustomConfirmDialog);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(this.view);
-
+        builder.setCancelable(false);
         builder.setTitle(this.title)
                 .setMessage(this.message)
-                .setPositiveButton("ブラウザで開く", this.okClickListener)
+                //.setPositiveButton("ブラウザで開く", this.okClickListener)
                 .setNeutralButton("共有",  this.ntClickListener)
                 .setNegativeButton("やり直し", this.ngClickListener);
+
+        if (this.okClickListener != null) {
+            builder.setPositiveButton("ブラウザで開く", this.okClickListener);
+        }
+
+        /*
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                // ダイアログが閉じられた際の処理
+                ToolbarCaptureActivity toolbarCaptureActivity = (ToolbarCaptureActivity) getActivity();
+                toolbarCaptureActivity.barcodeViewSingle();
+            }
+        });*/
+
+        builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+
+            @Override
+
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+
+                // Disable Back key and Search key
+
+                switch (keyCode) {
+
+                    case KeyEvent.KEYCODE_BACK:
+
+                        //Toast.makeText(getActivity(), "back", Toast.LENGTH_LONG).show();
+                        ToolbarCaptureActivity toolbarCaptureActivity = (ToolbarCaptureActivity) getActivity();
+                        toolbarCaptureActivity.barcodeViewSingle();
+                        //alertDialog.dismiss();
+                        dismiss();
+                        return true;
+
+                    default:
+
+                        return false;
+
+                }
+
+            }
+
+        });
 
 
         if (this.close) {
             return builder.create();
         } else {
+
             final AlertDialog alertDialog = builder.create();
+            /*
             alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface dialog) {
@@ -70,7 +117,7 @@ public class MyConfirmDialog extends DialogFragment {
                     });
                 }
 
-            });
+            });*/
             return alertDialog;
         }
     }

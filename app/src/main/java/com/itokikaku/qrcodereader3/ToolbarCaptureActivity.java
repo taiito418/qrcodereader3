@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -63,7 +62,7 @@ public class ToolbarCaptureActivity extends AppCompatActivity {
         barcodeViewSingle();
     }
 
-    private void barcodeViewSingle() { //読み取り処理を行うメソッド
+    public void barcodeViewSingle() { //読み取り処理を行うメソッド
         barcodeScannerView.decodeSingle(new BarcodeCallback() { //読み取りを行う
             @Override
             public void barcodeResult(BarcodeResult result) {
@@ -71,13 +70,18 @@ public class ToolbarCaptureActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), result.getText(), Toast.LENGTH_LONG).show();
                 final String res = result.getText();
                 dialogFragment = MyConfirmDialog.newInstance();
-                dialogFragment.setOnOkClickListener(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(res));
-                        getApplicationContext().startActivity(intent);
-                    }
-                });
+                if (res.startsWith("http:") || res.startsWith("https:")) {
+
+                    dialogFragment.setOnOkClickListener(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(res));
+                            getApplicationContext().startActivity(intent);
+                            barcodeViewSingle();
+                        }
+                    });
+                }
+
                 dialogFragment.setOnNgClickListener(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -102,7 +106,6 @@ public class ToolbarCaptureActivity extends AppCompatActivity {
     }
 
 
-
     /// このアプリをSNSシェアできるIntentを起動する
     private void openChooserToShareThisApp(String res) {
         ShareCompat.IntentBuilder builder
@@ -120,7 +123,7 @@ public class ToolbarCaptureActivity extends AppCompatActivity {
         }
     }
 
-        @Override
+    @Override
     protected void onResume() {
         super.onResume();
         capture.onResume();
