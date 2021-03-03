@@ -76,7 +76,7 @@ public class ToolbarCaptureActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(res));
-                            getApplicationContext().startActivity(intent);
+                            startActivity(intent);
                             barcodeViewSingle();
                         }
                     });
